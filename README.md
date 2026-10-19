@@ -140,21 +140,51 @@ sequenceDiagram
 
 ```text
 antigravity-twin-agents/
-├── plugin.json                 # Antigravity 插件配置清单 (v0.2.0)
-├── README.md                   # 插件使用与架构说明
-├── LICENSE                     # MIT 开源协议
+├── plugin.json                         # Antigravity 插件配置清单 (v0.2.0)
+├── README.md                           # 插件使用、双模架构与理论推导说明
+├── LICENSE                             # MIT 开源协议
 ├── agents/
-│   └── twin.md                 # 专职 "twin" 认知分身系统提示词与防雪崩守则
+│   └── twin.md                         # "twin" 认知与叙事分身系统提示词（已移除递归权限）
 ├── skills/
 │   └── twin-agents/
-│       └── SKILL.md            # 告知主会话何时派发、调用范式与池化调度协议
-└── rules/
-    └── AGENTS.md               # 常驻规则：零交接摘要、防写竞争、池化节流(≤6)与自决终结
+│       └── SKILL.md                    # 主会话调度协议：认知复盘/叙事推演双模调用范式
+├── rules/
+│   └── AGENTS.md                       # 常驻规则：显式现场注入、缓存亲和度、防写竞争与池化节流
+├── scripts/
+│   └── story_tree_scheduler.py         # 故事树池化调度器（并发<=6，祖先亲和度排序，Mermaid导出）
+├── tests/
+│   └── test_narrative_twin.py          # 自动化单元测试套件（并发上限、截断与排序断言）
+└── examples/
+    └── live_experiment_transcript.md   # 真实实机推演实验日志（Antigravity 实测原始报文）
 ```
 
 ---
 
+## 🛠️ 可执行调度器与测试验证 (Executable & Tests)
+
+为保证项目 100% 可独立运行与复现，仓库内置了生产级调度器与完整测试套件：
+
+### 1. 运行自动化单元测试
+```powershell
+python -m unittest discover tests
+```
+* 断言并发运行池永远严格 $\le 6$；
+* 验证祖先亲和度排序算法（相同父节点的任务紧密相邻，以越过 4k tokens 缓存门槛）；
+* 验证全局最大深度截断与终局收敛。
+
+### 2. 运行故事树并发池调度器原型
+```powershell
+python scripts/story_tree_scheduler.py --demo --depth 2 --concurrency 6
+```
+将自动输出基于祖先亲和度分组的滑动批次调度轨迹，并导出完整 Mermaid 故事拓扑图。
+
+### 3. 查看真实实机推演凭证
+详细查阅 [`examples/live_experiment_transcript.md`](examples/live_experiment_transcript.md)，获取在 Antigravity 真实环境下执行由分身 `5d83bf54-fdf8-4022-8f6d-32f3d5b5f1e6` 推演并回传的完整原始报文。
+
+---
+
 ## 🚀 安装与使用
+
 
 ### 1. 安装到 Google Antigravity
 克隆或复制本仓库到你的 Antigravity 插件配置目录：
