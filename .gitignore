@@ -14,6 +14,8 @@ __pycache__/
 *.swp
 *.swo
 
-# Antigravity Brain / Logs
+# Antigravity Brain / Logs & Checkpoints
 .system_generated/
 *.log
+*checkpoint*.json
+
