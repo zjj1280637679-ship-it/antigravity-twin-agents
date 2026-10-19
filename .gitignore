@@ -1,0 +1,19 @@
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Python / Cache
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Antigravity Brain / Logs
+.system_generated/
+*.log
